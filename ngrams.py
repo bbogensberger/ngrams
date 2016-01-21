@@ -51,14 +51,14 @@ def genNgrams(numLines,gramsPerLine, ngramSize,ngramNestedDict, ngramFreqDict):
     #if(gramsPerLine == 2):      #for some reason it generates ngramSize+1 if
     #    gramsPerLine = gramsPerLine-1   #this correction isn't made
     for i in range (numLines):
-        for j in range (gramsPerLine):
+        for j in range (gramsPerLine): 
             print(prefix)
             prefix, word = findNextPrefix(prefix, ngramNestedDict)
             if word != 'no ngram':
                 line = line + ' ' + word
             else:
                 break
-        print (line)
+            print (line)
         #subsequent lines
         #first text on each line must be taken from an ngram that begins
         #with <s>
