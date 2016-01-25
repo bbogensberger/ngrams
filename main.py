@@ -1,4 +1,5 @@
 '''
+Bethany
 this file is just the main function with parameters:
 x: char for getData funtion
 grS: gramSize cannot be >4
