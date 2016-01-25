@@ -48,8 +48,8 @@ def genNgrams(numLines,gramsPerLine, ngramSize,ngramNestedDict, ngramFreqDict):
     #first line    
     prefix = findFirstPrefix('<s>', ngramFreqDict)
     line = prefix
-    #if(gramsPerLine == 2):      #for some reason it generates ngramSize+1 if
-    #    gramsPerLine = gramsPerLine-1   #this correction isn't made
+    if(gramsPerLine == 2):      #for some reason it generates ngramSize+1 if
+        gramsPerLine = gramsPerLine-1   #this correction isn't made
     for i in range (numLines):
         for j in range (gramsPerLine): 
             print(prefix)
