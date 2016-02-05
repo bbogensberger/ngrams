@@ -48,22 +48,33 @@ def genNgrams(numLines,gramsPerLine, ngramSize,ngramNestedDict, ngramFreqDict):
     #first line    
     prefix = findFirstPrefix('<s>', ngramFreqDict)
     line = prefix
-    if(gramsPerLine == 2):      #for some reason it generates ngramSize+1 if
-        gramsPerLine = gramsPerLine-1   #this correction isn't made
+
     for i in range (numLines):
-        for j in range (gramsPerLine): 
-            print(prefix)
-            prefix, word = findNextPrefix(prefix, ngramNestedDict)
-            if word != 'no ngram':
-                line = line + ' ' + word
-            else:
-                break
-            print (line)
-        #subsequent lines
-        #first text on each line must be taken from an ngram that begins
-        #with <s>
-        prefix = findFirstPrefix('<s>', ngramFreqDict)
-        line = prefix
+        if gramsPerLine == 1:
+            for j in range (gramsPerLine):
+                prefix, word = findNextPrefix(prefix, ngramNestedDict)
+                if word != 'no ngram':
+                    line = line + ' ' + word
+                else:
+                    break
+            print line
+            prefix = findFirstPrefix('<s>', ngramFreqDict)
+            line = prefix
+        else:
+            full = ''
+            for j in range (gramsPerLine):
+                for l in range(ngramSize-int(ngramSize*.75)):
+                    prefix, word = findNextPrefix(prefix, ngramNestedDict)
+                    if word != 'no ngram':
+                        line = line + ' ' + word
+                    else:
+                        break
+                full = full + line + '\t \t' 
+                prefix = findFirstPrefix('<s>', ngramFreqDict)
+                line = prefix
+            print (full)
+            prefix = findFirstPrefix('<s>', ngramFreqDict)
+            line = prefix
         
     
 def findFirstPrefix(initToken, ngramFreqDict):

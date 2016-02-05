@@ -26,12 +26,12 @@ def main(x, grS, ngrS,numL):
     numLines = numL       #number of lines to display
     rawDataSize = 100   #lines of data from corpus to use
     unigramSize = 1     #unigrams per line
-    ngramSize = ngrS       #ngrams per line
+    gramsPerLine = ngrS       #ngrams per line
     
     sentLst = getData(x, rawDataSize)
     #these lines I added for clerification of what you enter
-    print "gram size: ", gramSize
-    print "Ngrams per line: ", ngramSize
+    print ("gram size: ", gramSize)
+    print ("Ngrams per line: ", gramsPerLine)
     
     if gramSize == 1:
         gramsPerLine = unigramSize
@@ -40,7 +40,7 @@ def main(x, grS, ngrS,numL):
         printDict(unigramDict)
         genUnigrams(numLines,gramsPerLine,unigramDict)
     else:
-        gramsPerLine = int(ngramSize / gramSize)
+        #gramsPerLine = int(ngramSize / gramSize)
         #make a frequency dictionary of ngrams
         ngramFreqDict = makeFreqNgramDict(sentLst,gramSize)
         printDict(ngramFreqDict)
