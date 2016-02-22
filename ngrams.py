@@ -2,11 +2,13 @@
 This file contains the funtions to generate and display the ngrams
     some changes were made
 '''
-import nltk
-from nltk.corpus import brown
+#import nltk
+#from nltk.corpus import brown
 import random
 import re
 import sys
+import pandas as pd #sys.path.insert(0,/usr/lib/python2.7/dist-packages)
+import numpy
 from dict_gen import *
 from unigram import *
 
@@ -48,7 +50,7 @@ def genNgrams(numLines,gramsPerLine, ngramSize,ngramNestedDict, ngramFreqDict):
     #first line    
     prefix = findFirstPrefix('<s>', ngramFreqDict)
     line = prefix
-
+    file = open('data.txt','w')
     for i in range (numLines):
         if gramsPerLine == 1:
             for j in range (gramsPerLine):
@@ -57,7 +59,7 @@ def genNgrams(numLines,gramsPerLine, ngramSize,ngramNestedDict, ngramFreqDict):
                     line = line + ' ' + word
                 else:
                     break
-            print line
+            file.write(line + '\n')
             prefix = findFirstPrefix('<s>', ngramFreqDict)
             line = prefix
         else:
@@ -69,19 +71,23 @@ def genNgrams(numLines,gramsPerLine, ngramSize,ngramNestedDict, ngramFreqDict):
                         line = line + ' ' + word
                     else:
                         break
-                full = full + line + '\t \t' 
+                full = full + line + '\t \t'
+                file.write(line + '\n')
                 prefix = findFirstPrefix('<s>', ngramFreqDict)
                 line = prefix
+            #file.write(full + '\n')
             print (full)
             prefix = findFirstPrefix('<s>', ngramFreqDict)
             line = prefix
         
     
 def findFirstPrefix(initToken, ngramFreqDict):
-    ngramLst = ngramFreqDict.keys()
     
+    ngramLst = list(ngramFreqDict.keys())
+
     while True:
         num = random.randint(0, len(ngramLst)- 1)
+        
         startGram = ngramLst[num]
         startGramLst = startGram.split()
         if startGramLst[0] == initToken:
@@ -116,10 +122,16 @@ def findNextPrefix(prefix, ngramNestedDict):
             prefixNxt = getPrefix(ngram)
             return prefixNxt, word
 
-#supplemental code to print the contents of a dictionary
-def printDict(dict):
-    stuff = dict.items()
-    for elt in stuff:
-        print (elt[0] + ' ' + str(elt[1]))
+def freqTable():
+    fileIn = open('data.txt', 'r')
+    fileOut = open('dataOut.txt', 'w')
+    lines = [line.strip() for line in fileIn if line.strip() and not line.startswith('com')]
+    lineSer = pd.Series(lines)
+    freq = str(lineSer.value_counts())
+    for line in freq:
+        fileOut.write(line)
+    return freq
+            
+    
 
 

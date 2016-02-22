@@ -19,7 +19,7 @@ each of which is a list of words.
 from ngrams import *
 from unigram import *
 from dict_gen import *
-def main(x, grS, ngrS,numL):
+def main(char, grS, ngrS,numL):
     #r = real data
     #t = test data from small files in the home directory
     gramSize = grS        #1, 2, 3, 4
@@ -28,7 +28,7 @@ def main(x, grS, ngrS,numL):
     unigramSize = 1     #unigrams per line
     gramsPerLine = ngrS       #ngrams per line
     
-    sentLst = getData(x, rawDataSize)
+    sentLst = getData(char, rawDataSize)
     #these lines I added for clerification of what you enter
     print ("gram size: ", gramSize)
     print ("Ngrams per line: ", gramsPerLine)
@@ -37,17 +37,12 @@ def main(x, grS, ngrS,numL):
         gramsPerLine = unigramSize
         #make a probability dictionary of words
         unigramDict = makeUnigramDict(sentLst, gramSize)
-        printDict(unigramDict)
         genUnigrams(numLines,gramsPerLine,unigramDict)
     else:
         #gramsPerLine = int(ngramSize / gramSize)
         #make a frequency dictionary of ngrams
         ngramFreqDict = makeFreqNgramDict(sentLst,gramSize)
-        printDict(ngramFreqDict)
         #make a nested probability dictionary of ngrams
         ngramNestedDict = makeNestedNgramDict(ngramFreqDict,gramSize)
-        printDict(ngramNestedDict)
-
         genNgrams(numLines, gramsPerLine, gramSize, ngramNestedDict, ngramFreqDict)
-           
-
+        print(freqTable())   
