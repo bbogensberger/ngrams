@@ -2,12 +2,10 @@
 This file contains the funtions to generate and display the ngrams
     some changes were made
 '''
-#import nltk
-#from nltk.corpus import brown
 import random
 import re
 import sys
-import pandas as pd #sys.path.insert(0,/usr/lib/python2.7/dist-packages)
+import pandas as pd 
 import numpy
 from dict_gen import *
 from unigram import *
@@ -20,7 +18,7 @@ def getData(data, rawDataSize):
         outLst = []
         #simple file in home directory.  N-grams are easily calculated
         #fileIn = open("dataIn.dat") 
-        fileIn = open("dataIn1.dat") 
+        fileIn = open("sonnet.txt") 
         sentences = fileIn.readlines()
         for sentence in sentences:
             sentence = sentence.rstrip()
@@ -45,7 +43,6 @@ def genNgrams(numLines,gramsPerLine, ngramSize,ngramNestedDict, ngramFreqDict):
         print ("---------------------TRIGRAMS----------------------")
     if ngramSize == 4:
         print ("---------------------QUADGRAMS----------------------")
-
     
     #first line    
     prefix = findFirstPrefix('<s>', ngramFreqDict)
@@ -75,8 +72,6 @@ def genNgrams(numLines,gramsPerLine, ngramSize,ngramNestedDict, ngramFreqDict):
                 file.write(line + '\n')
                 prefix = findFirstPrefix('<s>', ngramFreqDict)
                 line = prefix
-            #file.write(full + '\n')
-            print (full)
             prefix = findFirstPrefix('<s>', ngramFreqDict)
             line = prefix
         
@@ -127,10 +122,11 @@ def freqTable():
     fileOut = open('dataOut.txt', 'w')
     lines = [line.strip() for line in fileIn if line.strip() and not line.startswith('com')]
     lineSer = pd.Series(lines)
-    freq = str(lineSer.value_counts())
-    for line in freq:
-        fileOut.write(line)
-    return freq
+    freq =lineSer.value_counts()
+    freq.to_csv('dataOut.txt')
+    with pd.option_context('display.max_rows',999):
+        print freq
+    
             
     
 

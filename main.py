@@ -38,6 +38,7 @@ def main(char, grS, ngrS,numL):
         #make a probability dictionary of words
         unigramDict = makeUnigramDict(sentLst, gramSize)
         genUnigrams(numLines,gramsPerLine,unigramDict)
+        freqTable()
     else:
         #gramsPerLine = int(ngramSize / gramSize)
         #make a frequency dictionary of ngrams
@@ -45,4 +46,4 @@ def main(char, grS, ngrS,numL):
         #make a nested probability dictionary of ngrams
         ngramNestedDict = makeNestedNgramDict(ngramFreqDict,gramSize)
         genNgrams(numLines, gramsPerLine, gramSize, ngramNestedDict, ngramFreqDict)
-        print(freqTable())   
+        print(freqTable())  

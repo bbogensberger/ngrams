@@ -5,6 +5,7 @@ This file contains all of your original functions for making unigrams
 
 import random
 import sys
+import pandas as pd
 from dict_gen import *
 
 
@@ -41,8 +42,13 @@ def genUnigrams(numLines, wordsPerLine, probDict):  #correction here for 3rd par
 
     print ("---------------------UNIGRAMS----------------------")
     probLst = list(probDict.items())
+    file = open('data.txt','w')
     for i in range(numLines):
-        print (genUnigramsLine(probLst, wordsPerLine))
+        if wordsPerLine == 1:
+            file.write(genUnigramsLine(probLst, wordsPerLine)+'\n')
+        else:
+            for j in range(wordsPerLine):
+                file.write(genUnigramsLine(probLst, wordsPerLine))
     
 def genUnigramsLine(probLst, wordsPerLine):
     startEnd = ['<s>', '</s>']
@@ -65,3 +71,13 @@ def nicer(line):
         line = line[0].capitalize() + line[1:]
     return line
 
+def freqTable():
+    fileIn = open('data.txt', 'r')
+    fileOut = open('dataOut.txt', 'w')
+    lines = [line.strip() for line in fileIn if line.strip() and not line.startswith('com')]
+    lineSer = pd.Series(lines)
+    freq =lineSer.value_counts()
+    freq.to_csv('dataOut.txt')
+    with pd.option_context('display.max_rows',999):
+        print freq
+    
