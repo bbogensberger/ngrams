@@ -17,6 +17,7 @@ numL: number of lines to display
 each of which is a list of words.
 '''
 from grams import *
+#from graph import *
 
 def main(grS):
     gramSize = grS        #1, 2, 3, 4
@@ -27,4 +28,5 @@ def main(grS):
     lst=tok_words(lst)
     grams=gram_gen(lst, gramSize)
     #print(gram_dict(grams))
-    freqTable(grams)  
+    freqTable(grams)
+    #graph()
